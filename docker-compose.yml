@@ -1,0 +1,22 @@
+services:
+  php:
+    image: php:8.2-apache
+    container_name: meu-php
+    ports:
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - C:/Users/Pichau/Documents/Programacao/Imply/Procedural:/var/www/html
+    links:
+      - db  
+    command: bash -c "docker-php-ext-install pdo pdo_mysql mysqli && a2enmod rewrite && apache2-foreground"
+
+  db:
+    image: mysql:latest
+    container_name: meu-mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - /var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
