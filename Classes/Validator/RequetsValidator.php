@@ -4,8 +4,14 @@ namespace Validator;
 
 class RequetsValidator
 {
-    public function __construct()
+    private $request;
+    public function __construct($request)
     {
-        echo "Testando o autoload";
+        $this->$request = $request;
+    }
+
+    public function processRequest()
+    {
+        echo "to funcionando";
     }
 }

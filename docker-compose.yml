@@ -6,7 +6,7 @@ services:
       - "8080:80"
       - "443:443"
     volumes:
-      - C:/Users/Pichau/Documents/Programacao/Imply/Procedural:/var/www/html
+      - C:/Users/Pichau/Documents/Programacao/Imply/Procedural/desafioApi:/var/www/html
     links:
       - db  
     command: bash -c "docker-php-ext-install pdo pdo_mysql mysqli && a2enmod rewrite && apache2-foreground"
