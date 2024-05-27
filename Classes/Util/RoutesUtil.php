@@ -18,7 +18,7 @@ class RoutesUtil
     public static function getURLs()
     {
         $uri = str_replace('/'. DIR_PROJECT,"",$_SERVER['REQUEST_URI']);
-        $uri = trim($uri,'/desafioApi/');
+        $uri = trim($uri,'desafioApi/index.php');
         return explode('/',$uri);
     }
 }

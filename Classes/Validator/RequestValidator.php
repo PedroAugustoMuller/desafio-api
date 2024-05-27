@@ -3,6 +3,7 @@
 namespace Validator;
 
 use Repository\AuthorizedTokensRepository;
+use Service\TasksService;
 use Util\GenericConstantsUtil;
 use Util\JsonUtil;
 
@@ -15,6 +16,7 @@ class RequestValidator
 
     const GET = 'GET';
     const DELETE = 'DELETE';
+    const TASKS = 'TASKS';
     public function __construct($request = [])
     {
         $this->request = $request;
@@ -38,6 +40,22 @@ class RequestValidator
             $this->dadosRequest =  JsonUtil::treatJsonBody();
         }
         $this->AuthorizedTokensRepository->validateToken(getallheaders()['Authorization']);
+        $method = $this->request['method'];
+        return $this->$method();
+    }
+
+    private function get()
+    {
+        $retorno =  GenericConstantsUtil::MSG_ERRO_TIPO_ROTA;
+        if(in_array($this->request['route'],GenericConstantsUtil::TIPO_GET,true))
+        {
+            switch($this->request['route'])
+            {
+                case self::TASKS:
+                    $TasksSerivce = new TasksService($this->request);
+                    $retorno = $TasksSerivce->validateGet();
+            }
+        }
     }
 
 }
