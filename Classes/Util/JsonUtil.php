@@ -22,4 +22,25 @@ class JsonUtil
             return $postJson;
         }
     }
+    
+    public function processArray($array)
+    {
+        $data = [];
+        $data[GenericConstantsUtil::TIPO] = GenericConstantsUtil::TIPO_ERRO;
+        if((is_array($array) && count($array) > 0) || strlen($array)>10)
+        {
+            $data[GenericConstantsUtil::TIPO] = GenericConstantsUtil::TIPO_SUCESSO;
+            $data[GenericConstantsUtil::RESPOSTA] = $array;
+        }
+        $this->returnJson($data);
+
+    }
+
+    private function returnJson($json)
+    {
+       header('Content-Type:application/json');
+       header('Cache-Control: no-cache, no-store, must-revalidate');
+       header('Access-Control-Allow-Methods: GET,POST,PUT,DELETE');
+       echo (json_encode($json));
+    }
 }

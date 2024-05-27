@@ -2,6 +2,7 @@
 
 namespace Validator;
 
+use InvalidArgumentException;
 use Repository\AuthorizedTokensRepository;
 use Service\TasksService;
 use Util\GenericConstantsUtil;
@@ -54,8 +55,12 @@ class RequestValidator
                 case self::TASKS:
                     $TasksSerivce = new TasksService($this->request);
                     $retorno = $TasksSerivce->validateGet();
+                    break;
+                default:
+                    throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_RECURSO_INEXISTENTE);
             }
         }
+        return $retorno;
     }
 
 }

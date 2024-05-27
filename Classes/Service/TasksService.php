@@ -39,11 +39,13 @@ class TasksService
         {
             throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_RECURSO_INEXISTENTE);
         }
-
+        
         if($retorno == null)
         {
             throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_GENERICO);
         }
+
+        return $retorno;
     }
 
     public function getOneByKey()
@@ -53,6 +55,8 @@ class TasksService
 
     private function listar()
     {
-        return $this->TasksRepository->getMySql()->getAll(self::TABLE);
+        
+        $retorno = $this->TasksRepository->getMySql()->getAll(self::TABLE);
+        return $retorno;
     }
 }

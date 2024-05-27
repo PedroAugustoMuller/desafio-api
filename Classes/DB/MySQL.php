@@ -58,6 +58,7 @@ class MySQL
         if ($tabela) {
             $consulta = 'SELECT * FROM ' . $tabela;
             $stmt = $this->db->prepare($consulta);
+            $stmt->execute();
             $registros = $stmt->fetchAll($this->db::FETCH_ASSOC);
             if (is_array($registros) && count($registros) > 0) {
                 return $registros;
