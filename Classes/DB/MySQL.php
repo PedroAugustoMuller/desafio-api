@@ -22,7 +22,6 @@ class MySQL
     public function setDB()
     {
         try {
-            echo 'mysql:host=' . HOST . '; dbname=' . DB . ';'. USER.';'. SENHA;
             return new PDO(
                 'mysql:host=' . HOST . '; dbname=' . DB . ';', USER, SENHA
             );
