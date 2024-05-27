@@ -5,8 +5,8 @@ ini_set('display_startup_errors',1);
 error_reporting(E_ERROR);
 
 /*Constantes*/
-define('HOST','localhost');
-define('BANCO', 'api');
+define('HOST','127.0.0.1');
+define('DB', 'api');
 define('USER', 'root');
 define('SENHA', 'root');
 

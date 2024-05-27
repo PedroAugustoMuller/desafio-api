@@ -2,19 +2,22 @@
 
 namespace Validator;
 
+use Repository\authorizedTokensRepository;
 use Util\GenericConstantsUtil;
 use Util\JsonUtil;
 
 class RequestValidator
 {
     private $request;
-    private $dadosRequest = [];
+    private array $dadosRequest = [];
+    private object $AuthorizedTokensRepository;
 
     const GET = 'GET';
     const DELETE = 'DELETE';
     public function __construct($request = [])
     {
         $this->request = $request;
+        $this->AuthorizedTokensRepository = new AuthorizedTokensRepository();
 
     }
 
@@ -34,6 +37,8 @@ class RequestValidator
         {
             $this->dadosRequest =  JsonUtil::treatJsonBody();
         }
+        echo '<pre>';
+        echo var_dump(getallheaders());
     }
 
 }
