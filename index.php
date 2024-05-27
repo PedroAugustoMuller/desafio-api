@@ -1,5 +1,6 @@
 <?php
 
+use Util\GenericConstantsUtil;
 use Util\RoutesUtil;
 use Validator\RequestValidator;
 include 'bootstrap.php';
@@ -11,5 +12,9 @@ try
 } 
 catch(Exception $e)
 {
-    echo $e->getMessage();
+    echo json_encode([
+        GenericConstantsUtil::TIPO => GenericConstantsUtil::TIPO_ERRO,
+        GenericConstantsUtil::RESPOSTA => $e->getMessage()
+    ]);
+    exit;
 }

@@ -11,7 +11,6 @@ class JsonUtil
     {
         try
         {
-
             $postJson = json_decode(file_get_contents('php://input'), true);
         } catch( JsonException $e)
         {

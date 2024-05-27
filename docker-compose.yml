@@ -1,19 +1,19 @@
 services:
   php:
     image: php:8.2-apache
-    container_name: meu-php
+    container_name: my-php
     ports:
       - "8080:80"
       - "443:443"
     volumes:
-      - C:/Users/Pichau/Documents/Programacao/Imply/Procedural/desafioApi:/var/www/html
+      - /home/imply/Documentos/apps_imply/php/desafioApi:/var/www/html
     links:
       - db  
     command: bash -c "docker-php-ext-install pdo pdo_mysql mysqli && a2enmod rewrite && apache2-foreground"
 
   db:
     image: mysql:5.7
-    container_name: meu-mysql
+    container_name: my-sql
     ports:
       - "3306:3306"
     volumes:

@@ -2,7 +2,7 @@
 
 namespace Validator;
 
-use Repository\authorizedTokensRepository;
+use Repository\AuthorizedTokensRepository;
 use Util\GenericConstantsUtil;
 use Util\JsonUtil;
 
@@ -11,6 +11,7 @@ class RequestValidator
     private $request;
     private array $dadosRequest = [];
     private object $AuthorizedTokensRepository;
+
 
     const GET = 'GET';
     const DELETE = 'DELETE';
@@ -24,7 +25,6 @@ class RequestValidator
     public function processRequest()
     {
         $retorno = GenericConstantsUtil::MSG_ERRO_TIPO_ROTA;
-        $this->request['method'] = 'POST';
         if (in_array($this->request['method'], GenericConstantsUtil::TIPO_REQUEST, true)) {
             $retorno = $this->directRequest();
         }
@@ -37,8 +37,7 @@ class RequestValidator
         {
             $this->dadosRequest =  JsonUtil::treatJsonBody();
         }
-        echo '<pre>';
-        echo var_dump(getallheaders());
+        $this->AuthorizedTokensRepository->validateToken(getallheaders()['Authorization']);
     }
 
 }
