@@ -62,5 +62,22 @@ class RequestValidator
         }
         return $retorno;
     }
+    private function delete()
+    {
+        $retorno =  GenericConstantsUtil::MSG_ERRO_TIPO_ROTA;
+        if(in_array($this->request['route'],GenericConstantsUtil::TIPO_DELETE,true))
+        {
+            switch($this->request['route'])
+            {
+                case self::TASKS:
+                    $TasksSerivce = new TasksService($this->request);
+                    $retorno = $TasksSerivce->validateDelete();
+                    break;
+                default:
+                    throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_RECURSO_INEXISTENTE);
+            }
+        }
+        return $retorno;
+    }
 
 }
