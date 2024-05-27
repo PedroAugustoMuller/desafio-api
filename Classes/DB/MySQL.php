@@ -67,11 +67,6 @@ class MySQL
         throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_SEM_RETORNO);
     }
 
-    /**
-     * @param $tabela
-     * @param $id
-     * @return mixed
-     */
     public function getOneByKey($tabela, $id)
     {
         if ($tabela && $id) {

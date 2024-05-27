@@ -53,8 +53,8 @@ class RequestValidator
             switch($this->request['route'])
             {
                 case self::TASKS:
-                    $TasksSerivce = new TasksService($this->request);
-                    $retorno = $TasksSerivce->validateGet();
+                    $TasksService = new TasksService($this->request);
+                    $retorno = $TasksService->validateGet();
                     break;
                 default:
                     throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_RECURSO_INEXISTENTE);
@@ -70,11 +70,30 @@ class RequestValidator
             switch($this->request['route'])
             {
                 case self::TASKS:
-                    $TasksSerivce = new TasksService($this->request);
-                    $retorno = $TasksSerivce->validateDelete();
+                    $TasksService = new TasksService($this->request);
+                    $retorno = $TasksService->validateDelete();
                     break;
                 default:
                     throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_RECURSO_INEXISTENTE);
+            }
+        }
+        return $retorno;
+    }
+
+    private function post()
+    {
+        $retorno =  GenericConstantsUtil::MSG_ERRO_TIPO_ROTA;
+        if(in_array($this->request['route'],GenericConstantsUtil::TIPO_POST,true))
+        {
+            switch($this->request['route'])
+            {
+                case self::TASKS:
+                    $TasksService = new TasksService($this->request);
+                    $TasksService->setBodyData($this->dadosRequest);
+                    $retorno = $TasksService->validatePost();
+                    break;
+                default:
+                    throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_DESCRICAO_VAZIA);
             }
         }
         return $retorno;

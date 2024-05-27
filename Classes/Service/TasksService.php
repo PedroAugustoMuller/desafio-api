@@ -10,8 +10,10 @@ use Util\GenericConstantsUtil;
 class TasksService
 {
     public const TABLE = 'tasks';
-    private const RESOURCES_GET = ['listar','deletar'];
+    private const RESOURCES = ['listar','deletar','criar'];
     private array $data;
+
+    private array $dataRequest = [];
 
     private object $TasksRepository;
 
@@ -21,11 +23,15 @@ class TasksService
         $this->TasksRepository = new TasksRepository; 
     }
 
+    public function setBodyData($dataRequest)
+    {
+        $this->dataRequest = $dataRequest;
+    }
     public function validateGet()
     {
         $retorno = null;
         $resource = $this->data['resource'];
-        if(in_array($resource,self::RESOURCES_GET,true))
+        if(in_array($resource,self::RESOURCES,true))
         {
             if($this->data['id'] > 0)
             {
@@ -51,7 +57,7 @@ class TasksService
     {
         $retorno = null;
         $resource = $this->data['resource'];
-        if(in_array($resource,self::RESOURCES_GET,true))
+        if(in_array($resource,self::RESOURCES,true))
         {
             if($this->data['id'] > 0)
             {
@@ -61,6 +67,26 @@ class TasksService
                 throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_ID_OBRIGATORIO);
             }
 
+        } else
+        {
+            throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_RECURSO_INEXISTENTE);
+        }
+        
+        if($retorno == null)
+        {
+            throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_GENERICO);
+        }
+
+        return $retorno;
+    }
+
+    public function validatePost()
+    {
+        $retorno = null;
+        $resource = $this->data['resource'];
+        if(in_array($resource,self::RESOURCES,true))
+        {
+            $retorno = $this->$resource();
         } else
         {
             throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_RECURSO_INEXISTENTE);
@@ -90,5 +116,37 @@ class TasksService
         
         $retorno = $this->TasksRepository->getMySql()->getAll(self::TABLE);
         return $retorno;
+    }
+
+    private function criar()
+    {
+        $taskDescription = $this->dataRequest['task_description'];
+        $taskDate = $this->dataRequest['task_date'];
+        $taskStatus = $this->dataRequest['task_status'];
+        if($taskDescription)
+        {
+            if(!$taskDate)
+            {
+                $taskDate = date('Y-m-d');
+            }
+            if(!$taskStatus)
+            {
+                $taskStatus = 'todo';
+            }
+            if($this->TasksRepository->insertTask($taskDescription,$taskDate,$taskStatus) > 0)
+            {
+                $insertedId = $this->TasksRepository->getMySql()->getDb()->lastInsertId();
+                $this->TasksRepository->getMySql()->getDb()->commit();
+                return ['insertedID' => $insertedId];
+            }
+                $this->TasksRepository->getMySql()->getDb()->rollBack();
+                throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_GENERICO);
+
+
+        }
+        else
+        {
+            throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_DESCRICAO_VAZIA);
+        }
     }
 }

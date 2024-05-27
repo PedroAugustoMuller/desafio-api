@@ -20,6 +20,7 @@ abstract class GenericConstantsUtil
     public const MSG_ERRO_TOKEN_VAZIO = 'É necessário informar um Token!';
     public const MSG_ERRO_TOKEN_NAO_AUTORIZADO = 'Token não autorizado!';
     public const MSG_ERR0_JSON_VAZIO = 'O Corpo da requisição não pode ser vazio!';
+    public const MSG_ERRO_DESCRICAO_VAZIA = 'A descrição não pode ser vazia!';
 
     /* SUCESSO */
     public const MSG_DELETADO_SUCESSO = 'Registro deletado com Sucesso!';
