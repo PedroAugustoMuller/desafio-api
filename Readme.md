@@ -14,3 +14,11 @@ tasks/criar -> cria uma task seguindo o seguinte padrão:
 	"task_status": "(todo,doing,done)"
 }
 <br>
+tasks/atualizar/[id] -> atualiza a task do ID especificado:
+<br>
+{
+	"task_description": "xxxxxxx",
+	"task_date": "YYYY-MM-DD" (SYSDATE),
+	"task_status": "(todo,doing,done)"
+}
+<br>

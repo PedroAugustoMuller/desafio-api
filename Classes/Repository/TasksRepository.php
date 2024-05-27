@@ -25,6 +25,22 @@ class TasksRepository
         return $stmt->rowCount();
     }
 
+    public function updateTask($id,$description,$date,$status)
+    {
+        $insert = 'UPDATE '. self::TABLE .' SET task_description = :description, 
+        task_date = :date, 
+        task_status = :status 
+        WHERE id = :id';
+        $this->MySQL->getDb()->beginTransaction();
+        $stmt = $this->MySQL->getDb()->prepare($insert);
+        $stmt->bindParam(':description',$description);
+        $stmt->bindParam(':date',$date);
+        $stmt->bindParam(':status',$status);
+        $stmt->bindParam(':id',$id);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
     public function getMySql()
     {
         return $this->MySQL;

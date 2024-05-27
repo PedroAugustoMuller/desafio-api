@@ -99,4 +99,23 @@ class RequestValidator
         return $retorno;
     }
 
+    private function put()
+    {
+        $retorno =  GenericConstantsUtil::MSG_ERRO_TIPO_ROTA;
+        if(in_array($this->request['route'],GenericConstantsUtil::TIPO_PUT,true))
+        {
+            switch($this->request['route'])
+            {
+                case self::TASKS:
+                    $TasksService = new TasksService($this->request);
+                    $TasksService->setBodyData($this->dadosRequest);
+                    $retorno = $TasksService->validatePut();
+                    break;
+                default:
+                    throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_DESCRICAO_VAZIA);
+            }
+        }
+        return $retorno;
+    }
+
 }

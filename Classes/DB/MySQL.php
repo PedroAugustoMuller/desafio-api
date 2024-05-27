@@ -30,11 +30,6 @@ class MySQL
         }
     }
 
-    /**
-     * @param $tabela
-     * @param $id
-     * @return string
-     */
     public function delete($tabela, $id)
     {
         $consultaDelete = 'DELETE FROM ' . $tabela . ' WHERE id = :id';

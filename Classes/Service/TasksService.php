@@ -10,7 +10,7 @@ use Util\GenericConstantsUtil;
 class TasksService
 {
     public const TABLE = 'tasks';
-    private const RESOURCES = ['listar','deletar','criar'];
+    private const RESOURCES = ['listar','deletar','criar','atualizar'];
     private array $data;
 
     private array $dataRequest = [];
@@ -99,6 +99,32 @@ class TasksService
 
         return $retorno;
     }
+    public function validatePut()
+    {
+        $retorno = null;
+        $resource = $this->data['resource'];
+        if(in_array($resource,self::RESOURCES,true))
+        {
+            if($this->data['id'] > 0)
+            {
+                $retorno = $this->$resource();
+            } else
+            {
+                throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_ID_OBRIGATORIO);
+            }
+
+        } else
+        {
+            throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_RECURSO_INEXISTENTE);
+        }
+        
+        if($retorno == null)
+        {
+            throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_GENERICO);
+        }
+
+        return $retorno;
+    }
 
     public function getOneByKey()
     {
@@ -148,5 +174,36 @@ class TasksService
         {
             throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_DESCRICAO_VAZIA);
         }
+    }
+
+    private function atualizar()
+    {
+        $taskDescription = $this->dataRequest['task_description'];
+        $taskDate = $this->dataRequest['task_date'];
+        $taskStatus = $this->dataRequest['task_status'];
+        if($taskDescription)
+        {
+            if(!$taskDate)
+            {
+                $taskDate = date('Y-m-d');
+            }
+            if(!$taskStatus)
+            {
+                $taskStatus = 'todo';
+            }
+            if( $this->TasksRepository->updateTask($this->data['id'],$taskDescription,$taskDate,$taskStatus) > 0)
+            {
+                $this->TasksRepository->getMySql()->getDb()->commit();
+                return GenericConstantsUtil::MSG_ATUALIZADO_SUCESSO;
+            }
+                $this->TasksRepository->getMySql()->getDb()->rollBack();
+                throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_NAO_AFETADO);
+
+        }
+        else
+        {
+            throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERRO_DESCRICAO_VAZIA);
+        }
+        
     }
 }

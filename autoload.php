@@ -1,8 +1,5 @@
 <?php
-/**
- * AUTOLOAD DE CLASSES PARA O PACOTE 'Classes'
- * @param $classe
- */
+
 function autoload($classe)
 {
     $diretorioBase = DIR_APP . DS;
