@@ -50,7 +50,7 @@ class TasksService
 
     public function getOneByKey()
     {
-
+        return $this->TasksRepository->getMySql()->getOneByKey(self::TABLE,$this->data['id']);
     }
 
     private function listar()
