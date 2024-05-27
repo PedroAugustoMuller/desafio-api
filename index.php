@@ -1,12 +1,12 @@
 <?php
 
 use Util\RoutesUtil;
-use Validator\RequetsValidator;
+use Validator\RequestValidator;
 include 'bootstrap.php';
 
 try
 {
-    $requestValidator = new RequetsValidator(RoutesUtil::getRoutes());
+    $requestValidator = new RequestValidator(RoutesUtil::getRoutes());;
     $retorno = $requestValidator->processRequest();
 } 
 catch(Exception $e)

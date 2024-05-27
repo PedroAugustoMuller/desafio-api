@@ -4,6 +4,7 @@ ini_set('display_error',1);
 ini_set('display_startup_errors',1);
 error_reporting(E_ERROR);
 
+/*Constantes*/
 define('HOST','localhost');
 define('BANCO', 'api');
 define('USER', 'root');
