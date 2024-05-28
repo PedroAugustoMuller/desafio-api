@@ -11,9 +11,6 @@ class MySQL
 {
     private object $db;
 
-    /**
-     * MySQL constructor.
-     */
     public function __construct()
     {
         $this->db = $this->setDB();

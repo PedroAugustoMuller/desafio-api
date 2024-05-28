@@ -2,7 +2,7 @@
 
 namespace Util;
 
-use Exception;
+use InvalidArgumentException;
 use JsonException;
 
 class JsonUtil
@@ -14,7 +14,7 @@ class JsonUtil
             $postJson = json_decode(file_get_contents('php://input'), true);
         } catch( JsonException $e)
         {
-            throw new \InvalidArgumentException(GenericConstantsUtil::MSG_ERR0_JSON_VAZIO);
+            throw new InvalidArgumentException(GenericConstantsUtil::MSG_ERR0_JSON_VAZIO);
         }
 
         if(is_array($postJson) && count($postJson) > 0)

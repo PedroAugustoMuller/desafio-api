@@ -10,7 +10,8 @@ class RoutesUtil
         $request = [];
         $request['route'] = strtoupper($urls[0]);
         $request['resource'] = $urls[1] ?? null;
-        $request['id'] = $urls[2] ?? null;
+        $request['filter'] = $urls[2] ?? null;
+        $request['param'] = $urls[3] ?? "";
         $request['method'] = $_SERVER['REQUEST_METHOD'];
 
         return $request;
@@ -18,7 +19,7 @@ class RoutesUtil
     public static function getURLs()
     {
         $uri = str_replace('/'. DIR_PROJECT,"",$_SERVER['REQUEST_URI']);
-        $uri = trim($uri,'desafioApi/index.php');
+        $uri = ltrim($uri,'desafioApi/index.php');
         return explode('/',$uri);
     }
 }
